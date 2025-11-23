@@ -10,7 +10,21 @@ import {
   ArrowLeft,
   Video,
   Users,
+  TrendingUp,
 } from "lucide-react";
+import {
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  CartesianGrid,
+} from "recharts";
 
 const SchedulePage = () => {
   const navigate = useNavigate();
@@ -46,6 +60,23 @@ const SchedulePage = () => {
     { task: "Schedule 1:1 with mentor", completed: false },
     { task: "Complete security training module", completed: false },
     { task: "Join team Slack channels", completed: false },
+  ];
+
+  // Weekly Activity Data
+  const weeklyActivityData = [
+    { day: "Mon", meetings: 3, tasks: 8, hours: 7 },
+    { day: "Tue", meetings: 2, tasks: 6, hours: 8 },
+    { day: "Wed", meetings: 4, tasks: 5, hours: 6 },
+    { day: "Thu", meetings: 1, tasks: 9, hours: 8 },
+    { day: "Fri", meetings: 3, tasks: 7, hours: 7 },
+  ];
+
+  // Time Distribution Data
+  const timeDistributionData = [
+    { name: "Meetings", value: 30, color: "#fb923c" },
+    { name: "Coding", value: 45, color: "#60a5fa" },
+    { name: "Learning", value: 15, color: "#34d399" },
+    { name: "Breaks", value: 10, color: "#a78bfa" },
   ];
 
   const upcomingEvents = [
@@ -232,15 +263,153 @@ const SchedulePage = () => {
           </motion.div>
         </div>
 
-        {/* Upcoming Events */}
+        {/* Weekly Activity Chart */}
         <motion.div
-          className="mt-8 glass-card p-8 border border-purple-900/30 hover:border-purple-500/50 transition-all duration-300"
+          className="mt-8 glass-card p-8 border border-blue-900/30 hover:border-blue-500/50 transition-all duration-300"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
           <h3 className="text-2xl font-semibold mb-6 flex items-center">
-            <Video className="w-6 h-6 mr-3 text-purple-400" />
+            <TrendingUp className="w-6 h-6 mr-3 text-blue-400" />
+            Weekly Activity Overview
+          </h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={weeklyActivityData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis dataKey="day" stroke="#9CA3AF" />
+              <YAxis stroke="#9CA3AF" />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#1F2937",
+                  border: "1px solid #374151",
+                  borderRadius: "8px",
+                }}
+              />
+              <Legend />
+              <Bar
+                dataKey="meetings"
+                fill="#fb923c"
+                name="Meetings"
+                radius={[8, 8, 0, 0]}
+              />
+              <Bar
+                dataKey="tasks"
+                fill="#60a5fa"
+                name="Tasks Completed"
+                radius={[8, 8, 0, 0]}
+              />
+              <Bar
+                dataKey="hours"
+                fill="#34d399"
+                name="Work Hours"
+                radius={[8, 8, 0, 0]}
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        </motion.div>
+
+        {/* Time Distribution */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+          <motion.div
+            className="glass-card p-8 border border-purple-900/30 hover:border-purple-500/50 transition-all duration-300"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            <h3 className="text-2xl font-semibold mb-6 flex items-center">
+              <Activity className="w-6 h-6 mr-3 text-purple-400" />
+              Time Distribution
+            </h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={timeDistributionData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={({ name, percent }) =>
+                    `${name} ${(percent * 100).toFixed(0)}%`
+                  }
+                  outerRadius={100}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {timeDistributionData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#1F2937",
+                    border: "1px solid #374151",
+                    borderRadius: "8px",
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </motion.div>
+
+          <motion.div
+            className="glass-card p-8 border border-emerald-900/30 hover:border-emerald-500/50 transition-all duration-300"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            <h3 className="text-2xl font-semibold mb-6 flex items-center">
+              <Zap className="w-6 h-6 mr-3 text-emerald-400" />
+              Productivity Insights
+            </h3>
+            <div className="space-y-6">
+              <div className="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-gray-400">Average Daily Tasks</span>
+                  <span className="text-2xl font-bold text-white">7.2</span>
+                </div>
+                <div className="w-full bg-dark-lighter rounded-full h-2 mt-3">
+                  <div
+                    className="bg-gradient-to-r from-green-500 to-emerald-500 rounded-full h-2"
+                    style={{ width: "72%" }}
+                  ></div>
+                </div>
+              </div>
+              <div className="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-gray-400">Meeting Efficiency</span>
+                  <span className="text-2xl font-bold text-white">85%</span>
+                </div>
+                <div className="w-full bg-dark-lighter rounded-full h-2 mt-3">
+                  <div
+                    className="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full h-2"
+                    style={{ width: "85%" }}
+                  ></div>
+                </div>
+              </div>
+              <div className="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-gray-400">Focus Time</span>
+                  <span className="text-2xl font-bold text-white">92%</span>
+                </div>
+                <div className="w-full bg-dark-lighter rounded-full h-2 mt-3">
+                  <div
+                    className="bg-gradient-to-r from-primary to-orange-600 rounded-full h-2"
+                    style={{ width: "92%" }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Upcoming Events */}
+        <motion.div
+          className="mt-8 glass-card p-8 border border-yellow-900/30 hover:border-yellow-500/50 transition-all duration-300"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+        >
+          <h3 className="text-2xl font-semibold mb-6 flex items-center">
+            <Video className="w-6 h-6 mr-3 text-yellow-400" />
             Upcoming Events
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

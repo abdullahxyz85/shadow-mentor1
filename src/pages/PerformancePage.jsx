@@ -11,6 +11,20 @@ import {
   Star,
   Zap,
 } from "lucide-react";
+import {
+  LineChart,
+  Line,
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  Legend,
+} from "recharts";
 
 const PerformancePage = () => {
   const navigate = useNavigate();
@@ -85,6 +99,24 @@ const PerformancePage = () => {
       color: "from-orange-500 to-red-500",
       icon: <Zap className="w-5 h-5" />,
     },
+  ];
+
+  // Performance Trend Data
+  const performanceTrendData = [
+    { month: "Jan", score: 65, tasks: 12, quality: 70 },
+    { month: "Feb", score: 72, tasks: 15, quality: 75 },
+    { month: "Mar", score: 78, tasks: 18, quality: 80 },
+    { month: "Apr", score: 85, tasks: 22, quality: 88 },
+    { month: "May", score: 87, tasks: 25, quality: 92 },
+  ];
+
+  // Monthly Achievements Data
+  const monthlyAchievementsData = [
+    { month: "Jan", achievements: 3 },
+    { month: "Feb", achievements: 5 },
+    { month: "Mar", achievements: 4 },
+    { month: "Apr", achievements: 7 },
+    { month: "May", achievements: 6 },
   ];
 
   return (
@@ -318,12 +350,101 @@ const PerformancePage = () => {
           </motion.div>
         </div>
 
+        {/* Performance Trend Chart */}
+        <motion.div
+          className="mt-8 glass-card p-8 border border-blue-900/30 hover:border-blue-500/50 transition-all duration-300"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+        >
+          <h3 className="text-2xl font-semibold mb-6 flex items-center">
+            <TrendingUp className="w-6 h-6 mr-3 text-blue-400" />
+            Performance Trend (Last 5 Months)
+          </h3>
+          <ResponsiveContainer width="100%" height={350}>
+            <AreaChart data={performanceTrendData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis dataKey="month" stroke="#9CA3AF" />
+              <YAxis stroke="#9CA3AF" />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#1F2937",
+                  border: "1px solid #374151",
+                  borderRadius: "8px",
+                }}
+              />
+              <Legend />
+              <Area
+                type="monotone"
+                dataKey="score"
+                stroke="#fb923c"
+                fill="#fb923c"
+                fillOpacity={0.6}
+                name="Overall Score"
+              />
+              <Area
+                type="monotone"
+                dataKey="quality"
+                stroke="#60a5fa"
+                fill="#60a5fa"
+                fillOpacity={0.4}
+                name="Code Quality"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </motion.div>
+
+        {/* Monthly Achievements Chart */}
+        <motion.div
+          className="mt-8 glass-card p-8 border border-cyan-900/30 hover:border-cyan-500/50 transition-all duration-300"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+        >
+          <h3 className="text-2xl font-semibold mb-6 flex items-center">
+            <Activity className="w-6 h-6 mr-3 text-cyan-400" />
+            Monthly Achievements
+          </h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={monthlyAchievementsData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis dataKey="month" stroke="#9CA3AF" />
+              <YAxis stroke="#9CA3AF" />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#1F2937",
+                  border: "1px solid #374151",
+                  borderRadius: "8px",
+                }}
+              />
+              <Bar
+                dataKey="achievements"
+                fill="url(#colorAchievements)"
+                radius={[8, 8, 0, 0]}
+                name="Achievements Earned"
+              />
+              <defs>
+                <linearGradient
+                  id="colorAchievements"
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                >
+                  <stop offset="5%" stopColor="#fbbf24" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#f59e0b" stopOpacity={0.3} />
+                </linearGradient>
+              </defs>
+            </BarChart>
+          </ResponsiveContainer>
+        </motion.div>
+
         {/* Achievement Badges */}
         <motion.div
           className="mt-8 glass-card p-8 border border-yellow-900/30 hover:border-yellow-500/50 transition-all duration-300"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.7 }}
         >
           <h3 className="text-2xl font-semibold mb-6 flex items-center">
             <Award className="w-6 h-6 mr-3 text-yellow-400" />

@@ -1,7 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { BookOpen, ExternalLink, Award, Target, ArrowLeft } from "lucide-react";
+import {
+  BookOpen,
+  ExternalLink,
+  Award,
+  Target,
+  ArrowLeft,
+  TrendingUp,
+} from "lucide-react";
+import {
+  LineChart,
+  Line,
+  BarChart,
+  Bar,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Radar,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  Legend,
+} from "recharts";
 
 const MyLearning = () => {
   const navigate = useNavigate();
@@ -157,6 +181,23 @@ const MyLearning = () => {
   const currentCertPath =
     certificationData[user.role] || certificationData["Software Engineer"];
 
+  // Learning Progress Data
+  const learningProgressData = [
+    { week: "Week 1", completed: 20, target: 25 },
+    { week: "Week 2", completed: 45, target: 50 },
+    { week: "Week 3", completed: 68, target: 75 },
+    { week: "Week 4", completed: 85, target: 100 },
+  ];
+
+  // Skills Radar Data
+  const skillsRadarData = [
+    { skill: "Technical", current: 75, target: 90 },
+    { skill: "Communication", current: 85, target: 95 },
+    { skill: "Problem Solving", current: 70, target: 85 },
+    { skill: "Teamwork", current: 90, target: 95 },
+    { skill: "Leadership", current: 65, target: 80 },
+  ];
+
   return (
     <div className="min-h-screen bg-dark p-8">
       <div className="max-w-7xl mx-auto">
@@ -276,7 +317,7 @@ const MyLearning = () => {
           </motion.div>
         </div>
 
-        {/* Learning Resources */}
+        {/* Learning Progress Chart */}
         <motion.div
           className="mt-8 glass-card p-8 border border-blue-900/30 hover:border-blue-500/50 transition-all duration-300"
           initial={{ opacity: 0, y: 20 }}
@@ -284,11 +325,98 @@ const MyLearning = () => {
           transition={{ delay: 0.3 }}
         >
           <h3 className="text-2xl font-semibold mb-6 flex items-center">
-            <BookOpen className="w-6 h-6 mr-3 text-blue-400" />
+            <TrendingUp className="w-6 h-6 mr-3 text-blue-400" />
+            Learning Progress Over Time
+          </h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={learningProgressData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis dataKey="week" stroke="#9CA3AF" />
+              <YAxis stroke="#9CA3AF" />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#1F2937",
+                  border: "1px solid #374151",
+                  borderRadius: "8px",
+                }}
+              />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="completed"
+                stroke="#fb923c"
+                strokeWidth={3}
+                name="Completed"
+                dot={{ fill: "#fb923c", r: 6 }}
+              />
+              <Line
+                type="monotone"
+                dataKey="target"
+                stroke="#60a5fa"
+                strokeWidth={2}
+                strokeDasharray="5 5"
+                name="Target"
+                dot={{ fill: "#60a5fa", r: 4 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </motion.div>
+
+        {/* Skills Radar Chart */}
+        <motion.div
+          className="mt-8 glass-card p-8 border border-purple-900/30 hover:border-purple-500/50 transition-all duration-300"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <h3 className="text-2xl font-semibold mb-6 flex items-center">
+            <Award className="w-6 h-6 mr-3 text-purple-400" />
+            Skills Assessment
+          </h3>
+          <ResponsiveContainer width="100%" height={400}>
+            <RadarChart data={skillsRadarData}>
+              <PolarGrid stroke="#374151" />
+              <PolarAngleAxis dataKey="skill" stroke="#9CA3AF" />
+              <PolarRadiusAxis angle={90} domain={[0, 100]} stroke="#9CA3AF" />
+              <Radar
+                name="Current Level"
+                dataKey="current"
+                stroke="#fb923c"
+                fill="#fb923c"
+                fillOpacity={0.6}
+              />
+              <Radar
+                name="Target Level"
+                dataKey="target"
+                stroke="#a78bfa"
+                fill="#a78bfa"
+                fillOpacity={0.3}
+              />
+              <Legend />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#1F2937",
+                  border: "1px solid #374151",
+                  borderRadius: "8px",
+                }}
+              />
+            </RadarChart>
+          </ResponsiveContainer>
+        </motion.div>
+
+        {/* Learning Resources */}
+        <motion.div
+          className="mt-8 glass-card p-8 border border-emerald-900/30 hover:border-emerald-500/50 transition-all duration-300"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+        >
+          <h3 className="text-2xl font-semibold mb-6 flex items-center">
+            <BookOpen className="w-6 h-6 mr-3 text-emerald-400" />
             Recommended Learning Resources
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-gray-900/50 p-6 rounded-lg hover:bg-gray-800/50 transition-colors">
+            <div className="bg-gray-900/50 p-6 rounded-lg hover:bg-gray-800/50 transition-colors border border-gray-800 hover:border-emerald-500/30">
               <h4 className="text-lg font-semibold text-white mb-2">
                 Documentation
               </h4>
@@ -302,7 +430,7 @@ const MyLearning = () => {
                 Browse Docs →
               </a>
             </div>
-            <div className="bg-gray-900/50 p-6 rounded-lg hover:bg-gray-800/50 transition-colors">
+            <div className="bg-gray-900/50 p-6 rounded-lg hover:bg-gray-800/50 transition-colors border border-gray-800 hover:border-emerald-500/30">
               <h4 className="text-lg font-semibold text-white mb-2">
                 Video Tutorials
               </h4>
@@ -316,7 +444,7 @@ const MyLearning = () => {
                 Watch Videos →
               </a>
             </div>
-            <div className="bg-gray-900/50 p-6 rounded-lg hover:bg-gray-800/50 transition-colors">
+            <div className="bg-gray-900/50 p-6 rounded-lg hover:bg-gray-800/50 transition-colors border border-gray-800 hover:border-emerald-500/30">
               <h4 className="text-lg font-semibold text-white mb-2">
                 Practice Labs
               </h4>
