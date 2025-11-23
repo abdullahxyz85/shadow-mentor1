@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Users,
   TrendingUp,
@@ -17,6 +17,8 @@ import {
   Home,
   BarChart3,
   UserPlus,
+  Activity,
+  Zap,
 } from "lucide-react";
 import {
   LineChart,
@@ -35,6 +37,64 @@ import {
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [activeEmployees, setActiveEmployees] = useState(60);
+  const [integrationTime, setIntegrationTime] = useState(10);
+  const [successRate, setSuccessRate] = useState(95);
+  const [gapsDetected, setGapsDetected] = useState(12);
+  const [liveActivity, setLiveActivity] = useState([]);
+  const [pulseAnimation, setPulseAnimation] = useState(false);
+
+  // Simulate real-time updates
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPulseAnimation(true);
+      setTimeout(() => setPulseAnimation(false), 1000);
+
+      // Random small fluctuations to simulate real-time changes
+      if (Math.random() > 0.7) {
+        setActiveEmployees((prev) => prev + (Math.random() > 0.5 ? 1 : 0));
+      }
+      if (Math.random() > 0.8) {
+        setSuccessRate((prev) =>
+          Math.min(100, prev + (Math.random() > 0.5 ? 0.1 : -0.1))
+        );
+      }
+      if (Math.random() > 0.85) {
+        setGapsDetected((prev) =>
+          Math.max(0, prev + (Math.random() > 0.6 ? -1 : 1))
+        );
+      }
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Simulate live activity feed
+  useEffect(() => {
+    const activities = [
+      "Emma Johnson completed onboarding task",
+      "New employee Liam O'Connor added to system",
+      "Sofia Martins passed certification test",
+      "Integration gap resolved for Adam Keller",
+      "Noah Yamamoto scheduled 1:1 meeting",
+      "Maya Benali accessed code repository",
+      "Chloe Ivanova completed security training",
+      "Ethan Delgado enrolled in blockchain course",
+    ];
+
+    const activityInterval = setInterval(() => {
+      const randomActivity =
+        activities[Math.floor(Math.random() * activities.length)];
+      const timestamp = new Date().toLocaleTimeString();
+
+      setLiveActivity((prev) => [
+        { text: randomActivity, time: timestamp, id: Date.now() },
+        ...prev.slice(0, 4), // Keep only last 5 activities
+      ]);
+    }, 8000);
+
+    return () => clearInterval(activityInterval);
+  }, []);
 
   const onboardingData = [
     { name: "Week 1", completed: 45, pending: 15 },
@@ -113,7 +173,7 @@ const Dashboard = () => {
   const stats = [
     {
       title: "Active Employees",
-      value: "60",
+      value: activeEmployees.toString(),
       change: "+8 this month",
       icon: <Users className="w-8 h-8" />,
       color: "from-blue-500 to-cyan-500",
@@ -121,7 +181,7 @@ const Dashboard = () => {
     },
     {
       title: "Avg. Integration Time",
-      value: "10 Days",
+      value: `${integrationTime} Days`,
       change: "-2 days from last month",
       icon: <Clock className="w-8 h-8" />,
       color: "from-primary to-orange-600",
@@ -129,7 +189,7 @@ const Dashboard = () => {
     },
     {
       title: "Success Rate",
-      value: "95%",
+      value: `${successRate.toFixed(1)}%`,
       change: "+5% improvement",
       icon: <TrendingUp className="w-8 h-8" />,
       color: "from-green-500 to-emerald-500",
@@ -137,7 +197,7 @@ const Dashboard = () => {
     },
     {
       title: "Gaps Detected",
-      value: "12",
+      value: gapsDetected.toString(),
       change: "3 resolved today",
       icon: <AlertCircle className="w-8 h-8" />,
       color: "from-red-500 to-rose-500",
@@ -186,32 +246,34 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-dark flex">
-      {/* Sidebar */}
+      {/* Sidebar - Enhanced Dark Styling */}
       <motion.aside
-        className={`fixed lg:static inset-y-0 left-0 z-50 glass-card border-r border-white/10 transition-all duration-300 ${
+        className={`fixed lg:static inset-y-0 left-0 z-50 bg-gradient-to-b from-black via-gray-950 to-black border-r border-primary/20 shadow-2xl shadow-primary/10 transition-all duration-300 ${
           sidebarOpen ? "w-64" : "w-20"
         }`}
         initial={{ x: -100 }}
         animate={{ x: 0 }}
       >
         <div className="flex flex-col h-full p-4">
-          {/* Logo */}
-          <div className="flex items-center justify-between mb-8">
-            <Link to="/" className="flex items-center space-x-2">
-              <img
-                src="/Shadow Mentor Logo.png"
-                alt="Shadow Mentor Logo"
-                className="w-20 h-20 object-contain flex-shrink-0"
-              />
+          {/* Logo with glow effect */}
+          <div className="flex items-center justify-between mb-8 pb-4 border-b border-primary/20">
+            <Link to="/" className="flex items-center space-x-2 group">
+              <div className="relative">
+                <img
+                  src="/Shadow Mentor Logo.png"
+                  alt="Shadow Mentor Logo"
+                  className="w-20 h-20 object-contain flex-shrink-0 drop-shadow-[0_0_15px_rgba(251,146,60,0.5)] group-hover:drop-shadow-[0_0_25px_rgba(251,146,60,0.8)] transition-all"
+                />
+              </div>
               {sidebarOpen && (
-                <span className="text-lg font-bold whitespace-nowrap">
+                <span className="text-lg font-bold whitespace-nowrap bg-gradient-to-r from-white to-primary bg-clip-text text-transparent">
                   ShadowMentor
                 </span>
               )}
             </Link>
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="lg:hidden text-gray-400 hover:text-white"
+              className="lg:hidden text-gray-400 hover:text-primary transition-colors"
             >
               {sidebarOpen ? (
                 <X className="w-6 h-6" />
@@ -221,28 +283,43 @@ const Dashboard = () => {
             </button>
           </div>
 
-          {/* Navigation */}
+          {/* Navigation with enhanced active states */}
           <nav className="flex-1 space-y-2">
             {sidebarItems.map((item, index) => (
               <Link
                 key={index}
                 to={item.path}
-                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg border transition-all duration-300 group relative overflow-hidden ${
                   item.active
-                    ? "bg-primary text-black font-semibold"
-                    : "text-gray-400 hover:bg-dark-tertiary hover:text-white"
+                    ? "bg-gradient-to-r from-primary to-orange-600 text-black font-semibold border-primary shadow-lg shadow-primary/50"
+                    : "bg-gray-900/50 text-gray-400 hover:text-white border-transparent hover:border-primary/50 hover:bg-gradient-to-r hover:from-primary/20 hover:to-orange-600/20"
                 }`}
               >
-                {item.icon}
-                {sidebarOpen && <span>{item.label}</span>}
+                <div
+                  className={`absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ${
+                    item.active ? "hidden" : ""
+                  }`}
+                ></div>
+                <span
+                  className={`relative z-10 ${
+                    item.active ? "" : "group-hover:text-primary"
+                  } transition-colors`}
+                >
+                  {item.icon}
+                </span>
+                {sidebarOpen && (
+                  <span className="relative z-10 group-hover:translate-x-1 transition-transform">
+                    {item.label}
+                  </span>
+                )}
               </Link>
             ))}
           </nav>
 
-          {/* User Profile */}
-          <div className="border-t border-white/10 pt-4 mt-4">
-            <div className="flex items-center space-x-3 px-4 py-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+          {/* User Profile with enhanced styling */}
+          <div className="border-t border-primary/20 pt-4 mt-4">
+            <div className="flex items-center space-x-3 px-4 py-3 bg-gradient-to-r from-purple-950/50 to-pink-950/50 rounded-lg border border-purple-800/30">
+              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-lg shadow-purple-500/50">
                 <span className="text-sm font-bold">HR</span>
               </div>
               {sidebarOpen && (
@@ -255,9 +332,9 @@ const Dashboard = () => {
             {sidebarOpen && (
               <Link
                 to="/"
-                className="flex items-center space-x-3 px-4 py-3 text-gray-400 hover:text-white transition"
+                className="flex items-center space-x-3 px-4 py-3 mt-2 rounded-lg bg-red-950/30 hover:bg-red-900/50 border border-red-900/30 hover:border-red-600/50 text-gray-400 hover:text-red-400 transition-all duration-300 group"
               >
-                <LogOut className="w-5 h-5" />
+                <LogOut className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                 <span>Back to Home</span>
               </Link>
             )}
@@ -286,21 +363,67 @@ const Dashboard = () => {
         </header>
 
         <div className="p-8 space-y-8">
-          {/* Stats Grid */}
+          {/* Live Activity Banner */}
+          <AnimatePresence>
+            {liveActivity.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="glass-card p-4 border border-primary/30 bg-primary/5"
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="relative">
+                    <Activity className="w-5 h-5 text-primary" />
+                    <span className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full animate-ping"></span>
+                    <span className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full"></span>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm text-white font-medium">
+                      {liveActivity[0]?.text}
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      {liveActivity[0]?.time}
+                    </p>
+                  </div>
+                  <Zap className="w-4 h-4 text-yellow-500" />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Stats Grid with enhanced styling */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {stats.map((stat, index) => (
               <motion.div
                 key={index}
-                className="glass-card p-6 hover:border-primary/50 transition-all duration-300"
+                className={`glass-card p-6 border transition-all duration-300 hover:shadow-xl ${
+                  index === 0
+                    ? "border-blue-900/30 hover:border-blue-500/50 hover:shadow-blue-500/20"
+                    : index === 1
+                    ? "border-green-900/30 hover:border-green-500/50 hover:shadow-green-500/20"
+                    : index === 2
+                    ? "border-purple-900/30 hover:border-purple-500/50 hover:shadow-purple-500/20"
+                    : "border-orange-900/30 hover:border-orange-500/50 hover:shadow-orange-500/20"
+                } ${
+                  pulseAnimation && index === 0 ? "ring-2 ring-primary/50" : ""
+                }`}
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  scale: pulseAnimation && index === 0 ? 1.02 : 1,
+                }}
                 transition={{ delay: index * 0.1 }}
               >
                 <div className="flex items-start justify-between mb-4">
                   <div
-                    className={`w-14 h-14 bg-gradient-to-br ${stat.color} rounded-xl flex items-center justify-center`}
+                    className={`w-14 h-14 bg-gradient-to-br ${stat.color} rounded-xl flex items-center justify-center relative`}
                   >
                     {stat.icon}
+                    {pulseAnimation && index === 0 && (
+                      <span className="absolute inset-0 bg-primary/20 rounded-xl animate-ping"></span>
+                    )}
                   </div>
                   <span
                     className={`text-xs font-semibold px-2 py-1 rounded-full ${
@@ -314,23 +437,31 @@ const Dashboard = () => {
                     {stat.change}
                   </span>
                 </div>
-                <h3 className="text-3xl font-bold mb-2">{stat.value}</h3>
+                <motion.h3
+                  className="text-3xl font-bold mb-2"
+                  animate={{
+                    scale: pulseAnimation && index === 0 ? [1, 1.05, 1] : 1,
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {stat.value}
+                </motion.h3>
                 <p className="text-gray-400 text-sm">{stat.title}</p>
               </motion.div>
             ))}
           </div>
 
-          {/* Charts Row */}
+          {/* Charts Row with enhanced styling */}
           <div className="grid lg:grid-cols-2 gap-6">
             {/* Onboarding Progress */}
             <motion.div
-              className="glass-card p-6"
+              className="glass-card p-6 border border-cyan-900/30 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/20"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
             >
               <h2 className="text-xl font-bold mb-6 flex items-center">
-                <TrendingUp className="w-6 h-6 mr-2 text-primary" />
+                <TrendingUp className="w-6 h-6 mr-2 text-cyan-400" />
                 Onboarding Progress
               </h2>
               <ResponsiveContainer width="100%" height={300}>
@@ -357,13 +488,13 @@ const Dashboard = () => {
 
             {/* Role Distribution */}
             <motion.div
-              className="glass-card p-6"
+              className="glass-card p-6 border border-pink-900/30 hover:border-pink-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/20"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
             >
               <h2 className="text-xl font-bold mb-6 flex items-center">
-                <Users className="w-6 h-6 mr-2 text-primary" />
+                <Users className="w-6 h-6 mr-2 text-pink-400" />
                 Role Distribution
               </h2>
               <ResponsiveContainer width="100%" height={300}>
@@ -396,14 +527,14 @@ const Dashboard = () => {
             </motion.div>
           </div>
 
-          {/* Integration Gaps Alert */}
+          {/* Integration Gaps Alert with enhanced styling */}
           <motion.div
-            className="glass-card p-6 border-l-4 border-red-500"
+            className="glass-card p-6 border border-red-900/50 hover:border-red-500/70 transition-all duration-300 bg-red-950/20 hover:shadow-lg hover:shadow-red-500/20"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
-            <h2 className="text-xl font-bold mb-4 flex items-center text-red-500">
+            <h2 className="text-xl font-bold mb-4 flex items-center text-red-400">
               <AlertCircle className="w-6 h-6 mr-2" />
               Integration Gaps Detected
             </h2>
@@ -506,11 +637,13 @@ const Dashboard = () => {
                       </td>
                       <td className="py-4 px-4">
                         <div className="flex items-center space-x-2">
-                          <div className="flex-1 bg-dark-tertiary rounded-full h-2">
-                            <div
-                              className="bg-gradient-to-r from-primary to-orange-600 h-2 rounded-full transition-all duration-500"
-                              style={{ width: `${employee.progress}%` }}
-                            ></div>
+                          <div className="flex-1 bg-dark-tertiary rounded-full h-2 overflow-hidden">
+                            <motion.div
+                              className="bg-gradient-to-r from-primary to-orange-600 h-2 rounded-full"
+                              initial={{ width: 0 }}
+                              animate={{ width: `${employee.progress}%` }}
+                              transition={{ duration: 1, delay: 0.2 }}
+                            ></motion.div>
                           </div>
                           <span className="text-sm font-semibold">
                             {employee.progress}%
@@ -532,6 +665,61 @@ const Dashboard = () => {
                   ))}
                 </tbody>
               </table>
+            </div>
+          </motion.div>
+
+          {/* Live Activity Feed */}
+          <motion.div
+            className="glass-card p-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+          >
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-bold flex items-center">
+                <Activity className="w-6 h-6 mr-2 text-primary" />
+                Live Activity Feed
+              </h2>
+              <div className="flex items-center space-x-2">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                </span>
+                <span className="text-sm text-gray-400">Real-time updates</span>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <AnimatePresence mode="popLayout">
+                {liveActivity.length === 0 ? (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-center py-8 text-gray-500"
+                  >
+                    <Activity className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                    <p>Waiting for activity updates...</p>
+                  </motion.div>
+                ) : (
+                  liveActivity.map((activity) => (
+                    <motion.div
+                      key={activity.id}
+                      initial={{ opacity: 0, x: -20, height: 0 }}
+                      animate={{ opacity: 1, x: 0, height: "auto" }}
+                      exit={{ opacity: 0, x: 20, height: 0 }}
+                      className="flex items-center space-x-3 p-3 bg-dark-lighter rounded-lg border border-gray-700/50 hover:border-primary/50 transition"
+                    >
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                      <div className="flex-1">
+                        <p className="text-sm text-white">{activity.text}</p>
+                      </div>
+                      <span className="text-xs text-gray-500">
+                        {activity.time}
+                      </span>
+                    </motion.div>
+                  ))
+                )}
+              </AnimatePresence>
             </div>
           </motion.div>
         </div>

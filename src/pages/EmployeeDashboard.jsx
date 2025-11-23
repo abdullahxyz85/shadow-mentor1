@@ -406,32 +406,34 @@ const EmployeeDashboard = () => {
 
   return (
     <div className="min-h-screen bg-dark flex">
-      {/* Sidebar */}
+      {/* Sidebar - Darker with gradient */}
       <motion.aside
-        className={`fixed lg:sticky top-0 left-0 h-screen bg-dark-lighter border-r border-gray-800 z-50 transition-all duration-300 ${
+        className={`fixed lg:sticky top-0 left-0 h-screen bg-gradient-to-b from-black via-gray-950 to-black border-r border-primary/20 shadow-2xl shadow-primary/10 z-50 transition-all duration-300 ${
           sidebarOpen ? "w-64" : "w-20"
         }`}
         initial={{ x: -100 }}
         animate={{ x: 0 }}
       >
         <div className="flex flex-col h-full p-4">
-          {/* Logo */}
-          <div className="flex items-center justify-between mb-8">
-            <Link to="/" className="flex items-center space-x-2">
-              <img
-                src="/Shadow Mentor Logo.png"
-                alt="Shadow Mentor Logo"
-                className="w-20 h-20 object-contain flex-shrink-0"
-              />
+          {/* Logo with glow effect */}
+          <div className="flex items-center justify-between mb-8 pb-4 border-b border-primary/20">
+            <Link to="/" className="flex items-center space-x-2 group">
+              <div className="relative">
+                <img
+                  src="/Shadow Mentor Logo.png"
+                  alt="Shadow Mentor Logo"
+                  className="w-20 h-20 object-contain flex-shrink-0 drop-shadow-[0_0_15px_rgba(251,146,60,0.5)] group-hover:drop-shadow-[0_0_25px_rgba(251,146,60,0.8)] transition-all"
+                />
+              </div>
               {sidebarOpen && (
-                <span className="text-lg font-bold whitespace-nowrap">
+                <span className="text-lg font-bold whitespace-nowrap bg-gradient-to-r from-white to-primary bg-clip-text text-transparent">
                   ShadowMentor
                 </span>
               )}
             </Link>
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="lg:hidden text-gray-400 hover:text-white"
+              className="lg:hidden text-gray-400 hover:text-primary transition-colors"
             >
               {sidebarOpen ? (
                 <X className="w-6 h-6" />
@@ -441,26 +443,31 @@ const EmployeeDashboard = () => {
             </button>
           </div>
 
-          {/* Navigation */}
+          {/* Navigation with active states */}
           <nav className="flex-1 space-y-2">
             {navigationItems.map((item, index) => (
               <button
                 key={index}
                 onClick={() => scrollToSection(item.anchor)}
-                className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-dark transition text-gray-400 hover:text-white"
+                className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg bg-gray-900/50 hover:bg-gradient-to-r hover:from-primary/20 hover:to-orange-600/20 border border-transparent hover:border-primary/50 transition-all duration-300 text-gray-400 hover:text-white group relative overflow-hidden"
               >
-                <item.icon className="w-5 h-5 flex-shrink-0" />
-                {sidebarOpen && <span>{item.label}</span>}
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                <item.icon className="w-5 h-5 flex-shrink-0 group-hover:text-primary transition-colors relative z-10" />
+                {sidebarOpen && (
+                  <span className="relative z-10 group-hover:translate-x-1 transition-transform">
+                    {item.label}
+                  </span>
+                )}
               </button>
             ))}
           </nav>
 
-          {/* Logout */}
+          {/* Logout with enhanced styling */}
           <button
             onClick={handleLogout}
-            className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-dark transition text-gray-400 hover:text-red-400 mt-auto"
+            className="flex items-center space-x-3 px-4 py-3 rounded-lg bg-red-950/30 hover:bg-red-900/50 border border-red-900/30 hover:border-red-600/50 transition-all duration-300 text-gray-400 hover:text-red-400 mt-auto group"
           >
-            <LogOut className="w-5 h-5 flex-shrink-0" />
+            <LogOut className="w-5 h-5 flex-shrink-0 group-hover:rotate-12 transition-transform" />
             {sidebarOpen && <span>Logout</span>}
           </button>
         </div>
@@ -480,73 +487,83 @@ const EmployeeDashboard = () => {
             </p>
           </div>
 
-          {/* Employee Info Card */}
+          {/* Employee Info Card with enhanced styling */}
           <div
             id="performance"
             className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8"
           >
-            <div className="glass-card p-6">
+            <motion.div
+              className="glass-card p-6 border border-blue-900/30 hover:border-blue-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
               <h3 className="text-lg font-semibold mb-4 flex items-center">
-                <Users className="w-5 h-5 mr-2 text-primary" />
+                <Users className="w-5 h-5 mr-2 text-blue-400" />
                 Employee Information
               </h3>
               <div className="space-y-3 text-sm">
-                <div className="flex justify-between">
+                <div className="flex justify-between p-2 rounded bg-gray-900/50 hover:bg-gray-800/50 transition-colors">
                   <span className="text-gray-400">ID:</span>
                   <span className="text-white font-mono">
                     {employeeInfo._id}
                   </span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between p-2 rounded bg-gray-900/50 hover:bg-gray-800/50 transition-colors">
                   <span className="text-gray-400">Email:</span>
                   <span className="text-white text-xs">
                     {employeeInfo.email}
                   </span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between p-2 rounded bg-gray-900/50 hover:bg-gray-800/50 transition-colors">
                   <span className="text-gray-400">Contract Type:</span>
                   <span className="text-white">
                     {employeeInfo.contract_type}
                   </span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between p-2 rounded bg-gray-900/50 hover:bg-gray-800/50 transition-colors">
                   <span className="text-gray-400">Country:</span>
                   <span className="text-white">
                     {employeeInfo.country_of_birth}
                   </span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between p-2 rounded bg-gray-900/50 hover:bg-gray-800/50 transition-colors">
                   <span className="text-gray-400">Gender:</span>
                   <span className="text-white">{employeeInfo.gender}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between p-2 rounded bg-gray-900/50 hover:bg-gray-800/50 transition-colors">
                   <span className="text-gray-400">Hire Date:</span>
                   <span className="text-white">{employeeInfo.hire_date}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between p-2 rounded bg-gray-900/50 hover:bg-gray-800/50 transition-colors">
                   <span className="text-gray-400">Service Days:</span>
                   <span className="text-primary font-semibold">
                     {employeeInfo.length_of_service_days} days
                   </span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between p-2 rounded bg-gray-900/50 hover:bg-gray-800/50 transition-colors">
                   <span className="text-gray-400">Level:</span>
                   <span className="text-primary font-semibold">
                     {employeeInfo.level}
                   </span>
                 </div>
-                <div className="flex justify-between pt-2 border-t border-gray-700">
+                <div className="flex justify-between p-2 rounded bg-gradient-to-r from-primary/20 to-orange-600/20 border border-primary/30">
                   <span className="text-gray-400">Salary:</span>
                   <span className="text-white font-bold">
                     {employeeInfo.salary}
                   </span>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="glass-card p-6">
+            <motion.div
+              className="glass-card p-6 border border-green-900/30 hover:border-green-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/20"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
               <h3 className="text-lg font-semibold mb-4 flex items-center">
-                <Target className="w-5 h-5 mr-2 text-primary" />
+                <Target className="w-5 h-5 mr-2 text-green-400" />
                 Initial Project
               </h3>
               <div className="space-y-3">
@@ -580,11 +597,16 @@ const EmployeeDashboard = () => {
                   <span className="text-white">{initialProject.mentor}</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="glass-card p-6">
+            <motion.div
+              className="glass-card p-6 border border-purple-900/30 hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
               <h3 className="text-lg font-semibold mb-4 flex items-center">
-                <BarChart3 className="w-5 h-5 mr-2 text-primary" />
+                <BarChart3 className="w-5 h-5 mr-2 text-purple-400" />
                 Performance Score
               </h3>
               <div className="space-y-4">
@@ -644,18 +666,24 @@ const EmployeeDashboard = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
 
-          {/* Certifications and Salary */}
+          {/* Certifications and Salary with enhanced styling */}
           <div
             id="learning"
             className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8"
           >
-            <div id="certifications" className="glass-card p-6">
+            <motion.div
+              id="certifications"
+              className="glass-card p-6 border border-yellow-900/30 hover:border-yellow-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-500/20"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4 }}
+            >
               <h3 className="text-lg font-semibold mb-4 flex items-center justify-between">
                 <span className="flex items-center">
-                  <Award className="w-5 h-5 mr-2 text-primary" />
+                  <Award className="w-5 h-5 mr-2 text-yellow-400" />
                   Certification Road Map
                 </span>
                 <a
@@ -702,11 +730,16 @@ const EmployeeDashboard = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
-            <div className="glass-card p-6">
+            <motion.div
+              className="glass-card p-6 border border-emerald-900/30 hover:border-emerald-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/20"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5 }}
+            >
               <h3 className="text-lg font-semibold mb-4 flex items-center">
-                <TrendingUp className="w-5 h-5 mr-2 text-primary" />
+                <TrendingUp className="w-5 h-5 mr-2 text-emerald-400" />
                 Salary Insight
               </h3>
               <div className="space-y-4">
@@ -740,15 +773,20 @@ const EmployeeDashboard = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
 
-          {/* Schedule and Daily Tasks */}
+          {/* Schedule and Daily Tasks with enhanced styling */}
           <div id="schedule" className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="glass-card p-6">
+            <motion.div
+              className="glass-card p-6 border border-cyan-900/30 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/20"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+            >
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold flex items-center">
-                  <Calendar className="w-5 h-5 mr-2 text-primary" />
+                  <Calendar className="w-5 h-5 mr-2 text-cyan-400" />
                   Smart Calendar
                 </h3>
                 <div className="flex items-center space-x-2">
@@ -801,21 +839,26 @@ const EmployeeDashboard = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="glass-card p-6">
+            <motion.div
+              className="glass-card p-6 border border-pink-900/30 hover:border-pink-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/20"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+            >
               <h3 className="text-lg font-semibold mb-4 flex items-center">
-                <CheckCircle className="w-5 h-5 mr-2 text-primary" />
+                <CheckCircle className="w-5 h-5 mr-2 text-pink-400" />
                 Daily Tasks
               </h3>
               <div className="space-y-3">
                 {dailyTasks.map((item, i) => (
                   <div
                     key={i}
-                    className={`flex items-center justify-between p-3 rounded-lg ${
+                    className={`flex items-center justify-between p-3 rounded-lg transition-all duration-300 ${
                       item.completed
-                        ? "bg-green-500/10 border border-green-500/30"
-                        : "bg-dark-lighter border border-gray-700"
+                        ? "bg-green-500/10 border border-green-500/30 hover:border-green-500/50"
+                        : "bg-gray-900/50 border border-gray-700 hover:border-gray-600"
                     }`}
                   >
                     <div className="flex items-center space-x-3">
@@ -842,11 +885,11 @@ const EmployeeDashboard = () => {
                       Completed: {dailyTasks.filter((t) => t.completed).length}/
                       {dailyTasks.length}
                     </span>
-                    <Activity className="w-4 h-4 text-primary" />
+                    <Activity className="w-4 h-4 text-pink-400" />
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </main>
