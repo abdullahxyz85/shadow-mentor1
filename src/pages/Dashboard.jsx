@@ -197,14 +197,16 @@ const Dashboard = () => {
         <div className="flex flex-col h-full p-4">
           {/* Logo */}
           <div className="flex items-center justify-between mb-8">
-            <Link to="/" className="flex items-center space-x-3">
+            <Link to="/" className="flex items-center space-x-2">
               <img
                 src="/Shadow Mentor Logo.png"
                 alt="Shadow Mentor Logo"
-                className="w-10 h-10 object-contain"
+                className="w-20 h-20 object-contain flex-shrink-0"
               />
               {sidebarOpen && (
-                <span className="text-xl font-bold">ShadowMentor</span>
+                <span className="text-lg font-bold whitespace-nowrap">
+                  ShadowMentor
+                </span>
               )}
             </Link>
             <button

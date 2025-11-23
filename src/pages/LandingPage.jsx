@@ -120,7 +120,7 @@ const LandingPage = () => {
               <img
                 src="/Shadow Mentor Logo.png"
                 alt="Shadow Mentor Logo"
-                className="w-16 h-16 object-contain"
+                className="w-20 h-20 object-contain"
               />
               <span className="text-2xl font-bold">
                 Shadow<span className="gradient-text">Mentor</span>
