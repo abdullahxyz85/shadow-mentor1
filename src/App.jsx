@@ -13,6 +13,7 @@ import EmployeeDashboard from "./pages/EmployeeDashboard";
 import MyLearning from "./pages/MyLearning";
 import SchedulePage from "./pages/SchedulePage";
 import PerformancePage from "./pages/PerformancePage";
+import AIChatbot from "./components/AIChatbot";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/employee/:id" element={<EmployeeView />} />
         <Route path="/admin" element={<AdminPanel />} />
       </Routes>
+      <AIChatbot />
     </Router>
   );
 }

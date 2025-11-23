@@ -198,7 +198,7 @@ const LandingPage = () => {
                 Get Started <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
               <a
-                href="https://github.com/abdullahxyz85/shadow-mentor1"
+                href="https://github.com/OussamaHm/Shadow_Mentor"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-secondary text-lg px-8 py-4 inline-flex items-center justify-center border-2 border-primary/30 hover:border-primary"
