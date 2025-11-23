@@ -20,6 +20,7 @@ import {
   AlertTriangle,
   Zap,
   BarChart3,
+  ArrowRight,
 } from "lucide-react";
 
 const EmployeeDashboard = () => {
@@ -390,19 +391,11 @@ const EmployeeDashboard = () => {
   ];
 
   const navigationItems = [
-    { icon: Home, label: "Overview", anchor: "#overview" },
-    { icon: BookOpen, label: "My Learning", anchor: "#learning" },
-    { icon: Calendar, label: "Schedule", anchor: "#schedule" },
-    { icon: Award, label: "Certifications", anchor: "#certifications" },
-    { icon: TrendingUp, label: "Performance", anchor: "#performance" },
+    { icon: Home, label: "Overview", path: "/employee-dashboard" },
+    { icon: BookOpen, label: "My Learning", path: "/my-learning" },
+    { icon: Calendar, label: "Schedule", path: "/my-schedule" },
+    { icon: TrendingUp, label: "Performance", path: "/my-performance" },
   ];
-
-  const scrollToSection = (anchor) => {
-    const element = document.querySelector(anchor);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
 
   return (
     <div className="min-h-screen bg-dark flex">
@@ -446,9 +439,9 @@ const EmployeeDashboard = () => {
           {/* Navigation with active states */}
           <nav className="flex-1 space-y-2">
             {navigationItems.map((item, index) => (
-              <button
+              <Link
                 key={index}
-                onClick={() => scrollToSection(item.anchor)}
+                to={item.path}
                 className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg bg-gray-900/50 hover:bg-gradient-to-r hover:from-primary/20 hover:to-orange-600/20 border border-transparent hover:border-primary/50 transition-all duration-300 text-gray-400 hover:text-white group relative overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
@@ -458,7 +451,7 @@ const EmployeeDashboard = () => {
                     {item.label}
                   </span>
                 )}
-              </button>
+              </Link>
             ))}
           </nav>
 
@@ -891,6 +884,71 @@ const EmployeeDashboard = () => {
               </div>
             </motion.div>
           </div>
+
+          {/* Quick Actions - Navigate to Detailed Pages */}
+          <motion.div
+            className="mt-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+          >
+            <h2 className="text-2xl font-bold mb-6">Quick Actions</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Link
+                to="/my-learning"
+                className="glass-card p-6 border border-yellow-900/30 hover:border-yellow-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-500/20 hover:scale-105 group"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-3 bg-yellow-500/20 rounded-lg group-hover:bg-yellow-500/30 transition-colors">
+                    <BookOpen className="w-6 h-6 text-yellow-400" />
+                  </div>
+                  <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-yellow-400 group-hover:translate-x-1 transition-all" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">
+                  My Learning
+                </h3>
+                <p className="text-gray-400 text-sm">
+                  View your projects, certifications, and learning roadmap
+                </p>
+              </Link>
+
+              <Link
+                to="/my-schedule"
+                className="glass-card p-6 border border-cyan-900/30 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/20 hover:scale-105 group"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-3 bg-cyan-500/20 rounded-lg group-hover:bg-cyan-500/30 transition-colors">
+                    <Calendar className="w-6 h-6 text-cyan-400" />
+                  </div>
+                  <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">
+                  My Schedule
+                </h3>
+                <p className="text-gray-400 text-sm">
+                  Manage your calendar, meetings, and daily tasks
+                </p>
+              </Link>
+
+              <Link
+                to="/my-performance"
+                className="glass-card p-6 border border-purple-900/30 hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20 hover:scale-105 group"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-3 bg-purple-500/20 rounded-lg group-hover:bg-purple-500/30 transition-colors">
+                    <TrendingUp className="w-6 h-6 text-purple-400" />
+                  </div>
+                  <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-purple-400 group-hover:translate-x-1 transition-all" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">
+                  My Performance
+                </h3>
+                <p className="text-gray-400 text-sm">
+                  Track your progress, achievements, and salary insights
+                </p>
+              </Link>
+            </div>
+          </motion.div>
         </div>
       </main>
     </div>
