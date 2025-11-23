@@ -198,9 +198,11 @@ const Dashboard = () => {
           {/* Logo */}
           <div className="flex items-center justify-between mb-8">
             <Link to="/" className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary to-orange-600 rounded-xl flex items-center justify-center">
-                <Users className="w-6 h-6 text-black" />
-              </div>
+              <img
+                src="/Shadow Mentor Logo.png"
+                alt="Shadow Mentor Logo"
+                className="w-10 h-10 object-contain"
+              />
               {sidebarOpen && (
                 <span className="text-xl font-bold">ShadowMentor</span>
               )}

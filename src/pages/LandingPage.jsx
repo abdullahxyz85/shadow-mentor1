@@ -117,9 +117,11 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-primary to-orange-600 rounded-xl flex items-center justify-center">
-                <Users className="w-7 h-7 text-black" />
-              </div>
+              <img
+                src="/Shadow Mentor Logo.png"
+                alt="Shadow Mentor Logo"
+                className="w-16 h-16 object-contain"
+              />
               <span className="text-2xl font-bold">
                 Shadow<span className="gradient-text">Mentor</span>
               </span>
@@ -143,7 +145,7 @@ const LandingPage = () => {
         </div>
       </motion.nav>
       {/* Hero Section */}
-      <section className="relative pt-20 pb-20 overflow-hidden">
+      <section className="relative pt-8 pb-20 overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-float"></div>
@@ -160,13 +162,12 @@ const LandingPage = () => {
             animate="animate"
             variants={staggerContainer}
           >
-            <motion.div className="inline-block mb-6" variants={fadeInUp}>
-              <div className="glass-card px-6 py-3 inline-flex items-center space-x-2">
-                <Shield className="w-5 h-5 text-primary" />
-                <span className="text-sm font-medium">
-                  AI-Powered HR Onboarding
-                </span>
-              </div>
+            <motion.div className="mb-2" variants={fadeInUp}>
+              <img
+                src="/Shadow Mentor Logo.png"
+                alt="Shadow Mentor"
+                className="w-48 h-48 mx-auto object-contain"
+              />
             </motion.div>
 
             <motion.h1
@@ -418,9 +419,11 @@ const LandingPage = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary to-orange-600 rounded-xl flex items-center justify-center">
-                <Users className="w-6 h-6 text-black" />
-              </div>
+              <img
+                src="/Shadow Mentor Logo.png"
+                alt="Shadow Mentor Logo"
+                className="w-12 h-12 object-contain"
+              />
               <span className="text-xl font-bold">
                 Shadow<span className="gradient-text">Mentor</span>
               </span>
