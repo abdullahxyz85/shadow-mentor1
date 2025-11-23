@@ -111,7 +111,7 @@ const Login = () => {
       type: "hr",
       name: "Lucas Hernandez",
       role: "HR Manager",
-      level: "Junior",
+      //   level: "Junior",
     },
   ];
 
