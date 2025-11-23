@@ -111,7 +111,7 @@ const MyLearning = () => {
 
   const certificationData = {
     "Software Engineer": {
-      roadmapLink: "https://roadmap.sh/pdfs/frontend.pdf",
+      roadmapLink: "https://roadmap.sh/pdfs/roadmaps/full-stack.pdf",
       certifications: [
         { name: "JavaScript Fundamentals", progress: 75 },
         { name: "React Advanced Patterns", progress: 45 },
@@ -119,7 +119,7 @@ const MyLearning = () => {
       ],
     },
     "Data Scientist": {
-      roadmapLink: "https://roadmap.sh/pdfs/data-science.pdf",
+      roadmapLink: "https://roadmap.sh/pdfs/roadmaps/ai-data-scientist.pdf",
       certifications: [
         { name: "Python for Data Science", progress: 80 },
         { name: "Machine Learning Basics", progress: 60 },
@@ -127,7 +127,7 @@ const MyLearning = () => {
       ],
     },
     "DevOps Engineer": {
-      roadmapLink: "https://roadmap.sh/pdfs/devops.pdf",
+      roadmapLink: "https://roadmap.sh/pdfs/roadmaps/devops.pdf",
       certifications: [
         { name: "Docker & Containerization", progress: 70 },
         { name: "Kubernetes Administration", progress: 50 },
@@ -135,7 +135,7 @@ const MyLearning = () => {
       ],
     },
     "QA Engineer": {
-      roadmapLink: "https://roadmap.sh/pdfs/qa.pdf",
+      roadmapLink: "https://roadmap.sh/pdfs/roadmaps/qa.pdf",
       certifications: [
         { name: "Test Automation", progress: 65 },
         { name: "Performance Testing", progress: 55 },
@@ -143,7 +143,7 @@ const MyLearning = () => {
       ],
     },
     "UX Designer": {
-      roadmapLink: "https://roadmap.sh/pdfs/ux-design.pdf",
+      roadmapLink: "https://roadmap.sh/pdfs/roadmaps/ux-design.pdf",
       certifications: [
         { name: "User Research Methods", progress: 85 },
         { name: "UI Design Principles", progress: 70 },
@@ -151,7 +151,7 @@ const MyLearning = () => {
       ],
     },
     "Backend Developer": {
-      roadmapLink: "https://roadmap.sh/pdfs/backend.pdf",
+      roadmapLink: "https://roadmap.sh/pdfs/roadmaps/backend.pdf",
       certifications: [
         { name: "RESTful API Design", progress: 75 },
         { name: "Database Optimization", progress: 60 },
@@ -159,7 +159,7 @@ const MyLearning = () => {
       ],
     },
     "Blockchain Developer": {
-      roadmapLink: "https://roadmap.sh/pdfs/blockchain.pdf",
+      roadmapLink: "https://roadmap.sh/pdfs/roadmaps/blockchain.pdf",
       certifications: [
         { name: "Blockchain Fundamentals", progress: 70 },
         { name: "Smart Contract Development", progress: 55 },
@@ -167,7 +167,7 @@ const MyLearning = () => {
       ],
     },
     "Cybersecurity Analyst": {
-      roadmapLink: "https://roadmap.sh/pdfs/cyber-security.pdf",
+      roadmapLink: "https://roadmap.sh/pdfs/roadmaps/cyber-security.pdf",
       certifications: [
         { name: "Network Security", progress: 80 },
         { name: "Ethical Hacking", progress: 65 },

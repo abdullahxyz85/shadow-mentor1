@@ -168,7 +168,7 @@ const Login = () => {
               <img
                 src="/Shadow Mentor Logo.png"
                 alt="Shadow Mentor"
-                className="w-24 h-24 mx-auto mb-4 object-contain"
+                className="w-32 h-32 mx-auto mb-4 object-contain drop-shadow-[0_0_15px_rgba(251,146,60,0.5)]"
               />
               <h1 className="text-3xl font-bold mb-2">
                 Welcome to <span className="gradient-text">Shadow Mentor</span>
