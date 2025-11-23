@@ -8,13 +8,17 @@ import Employees from "./pages/Employees";
 import Analytics from "./pages/Analytics";
 import Schedule from "./pages/Schedule";
 import Certifications from "./pages/Certifications";
+import Login from "./pages/Login";
+import EmployeeDashboard from "./pages/EmployeeDashboard";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
         <Route path="/employees" element={<Employees />} />
         <Route path="/analytics" element={<Analytics />} />
         <Route path="/schedule" element={<Schedule />} />

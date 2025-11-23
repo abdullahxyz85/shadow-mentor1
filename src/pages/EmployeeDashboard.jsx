@@ -1,0 +1,857 @@
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  Users,
+  Menu,
+  X,
+  Home,
+  Calendar,
+  Award,
+  TrendingUp,
+  LogOut,
+  BookOpen,
+  Target,
+  CheckCircle,
+  Clock,
+  Activity,
+  FileText,
+  ExternalLink,
+  AlertTriangle,
+  Zap,
+  BarChart3,
+} from "lucide-react";
+
+const EmployeeDashboard = () => {
+  const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [user, setUser] = useState(null);
+  const [activeScheduling, setActiveScheduling] = useState(true);
+
+  useEffect(() => {
+    // Get user from localStorage
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      setUser(JSON.parse(userData));
+    } else {
+      // Redirect to login if no user
+      navigate("/login");
+    }
+  }, [navigate]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
+
+  if (!user) {
+    return null;
+  }
+
+  // Generate employee data based on logged-in user
+  const employeeInfo = {
+    _id: user.id || "EMP001",
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    level: user.level || "Junior",
+    contract_type: "Full-time",
+    country_of_birth: "USA",
+    gender: "Not Specified",
+    hire_date: "2024-11-01",
+    length_of_service_days: Math.floor(
+      (new Date() - new Date("2024-11-01")) / (1000 * 60 * 60 * 24)
+    ),
+    salary: "$75,000",
+  };
+
+  // Role-based initial projects
+  const roleProjects = {
+    "Software Engineer": {
+      title: "Customer Portal Development",
+      description:
+        "Build a responsive customer dashboard using React and Node.js with real-time updates.",
+      skills: ["React", "Node.js", "MongoDB", "WebSocket"],
+      timeline: "6 weeks",
+      mentor: "Sarah Chen",
+    },
+    "Data Scientist": {
+      title: "Predictive Analytics Model",
+      description:
+        "Develop machine learning models to predict customer churn and improve retention.",
+      skills: ["Python", "TensorFlow", "Pandas", "SQL"],
+      timeline: "8 weeks",
+      mentor: "Dr. James Wilson",
+    },
+    "DevOps Engineer": {
+      title: "CI/CD Pipeline Setup",
+      description:
+        "Implement automated deployment pipeline with Docker and Kubernetes.",
+      skills: ["Docker", "Kubernetes", "Jenkins", "AWS"],
+      timeline: "5 weeks",
+      mentor: "Michael Roberts",
+    },
+    "QA Engineer": {
+      title: "Test Automation Framework",
+      description:
+        "Create comprehensive automated testing suite for web applications.",
+      skills: ["Selenium", "Jest", "Cypress", "API Testing"],
+      timeline: "6 weeks",
+      mentor: "Emily Watson",
+    },
+    "UX Designer": {
+      title: "Design System Creation",
+      description:
+        "Develop a comprehensive design system for consistent user experience.",
+      skills: ["Figma", "Design Tokens", "Component Library", "Accessibility"],
+      timeline: "7 weeks",
+      mentor: "Alex Thompson",
+    },
+    "Backend Developer": {
+      title: "Microservices Architecture",
+      description:
+        "Design and implement scalable microservices for payment processing.",
+      skills: ["Node.js", "PostgreSQL", "Redis", "RabbitMQ"],
+      timeline: "8 weeks",
+      mentor: "David Martinez",
+    },
+    "Blockchain Developer": {
+      title: "Smart Contract Development",
+      description:
+        "Build secure smart contracts for decentralized finance applications.",
+      skills: ["Solidity", "Web3.js", "Ethereum", "Security Audit"],
+      timeline: "10 weeks",
+      mentor: "Lisa Anderson",
+    },
+    "Cybersecurity Engineer": {
+      title: "Security Assessment System",
+      description:
+        "Implement vulnerability scanning and penetration testing framework.",
+      skills: [
+        "Network Security",
+        "Penetration Testing",
+        "SIEM",
+        "Threat Analysis",
+      ],
+      timeline: "6 weeks",
+      mentor: "Robert Kim",
+    },
+  };
+
+  const initialProject =
+    roleProjects[user.role] || roleProjects["Software Engineer"];
+
+  // Role-specific certifications with roadmap links
+  const certificationData = {
+    "Software Engineer": {
+      roadmapLink: "https://roadmap.sh/pdfs/roadmaps/full-stack.pdf",
+      certifications: [
+        {
+          name: "Full Stack Development Mastery",
+          progress: 15,
+          status: "In Progress",
+          enrolled: true,
+        },
+        {
+          name: "AWS Certified Developer",
+          progress: 0,
+          status: "Not Started",
+          enrolled: false,
+        },
+        {
+          name: "System Design Advanced",
+          progress: 0,
+          status: "Not Started",
+          enrolled: false,
+        },
+      ],
+    },
+    "Data Scientist": {
+      roadmapLink: "https://roadmap.sh/pdfs/roadmaps/ai-data-scientist.pdf",
+      certifications: [
+        {
+          name: "Machine Learning Specialization",
+          progress: 20,
+          status: "In Progress",
+          enrolled: true,
+        },
+        {
+          name: "Deep Learning with TensorFlow",
+          progress: 0,
+          status: "Not Started",
+          enrolled: false,
+        },
+        {
+          name: "Data Engineering Fundamentals",
+          progress: 0,
+          status: "Not Started",
+          enrolled: false,
+        },
+      ],
+    },
+    "DevOps Engineer": {
+      roadmapLink: "https://roadmap.sh/pdfs/roadmaps/devops.pdf",
+      certifications: [
+        {
+          name: "Docker & Kubernetes Mastery",
+          progress: 25,
+          status: "In Progress",
+          enrolled: true,
+        },
+        {
+          name: "AWS DevOps Engineer",
+          progress: 0,
+          status: "Not Started",
+          enrolled: false,
+        },
+        {
+          name: "Terraform Infrastructure",
+          progress: 0,
+          status: "Not Started",
+          enrolled: false,
+        },
+      ],
+    },
+    "QA Engineer": {
+      roadmapLink: "https://roadmap.sh/pdfs/roadmaps/qa.pdf",
+      certifications: [
+        {
+          name: "Test Automation Expert",
+          progress: 10,
+          status: "In Progress",
+          enrolled: true,
+        },
+        {
+          name: "ISTQB Advanced Certification",
+          progress: 0,
+          status: "Not Started",
+          enrolled: false,
+        },
+        {
+          name: "Performance Testing",
+          progress: 0,
+          status: "Not Started",
+          enrolled: false,
+        },
+      ],
+    },
+    "UX Designer": {
+      roadmapLink: "https://roadmap.sh/pdfs/roadmaps/ux-design.pdf",
+      certifications: [
+        {
+          name: "UX Design Fundamentals",
+          progress: 30,
+          status: "In Progress",
+          enrolled: true,
+        },
+        {
+          name: "Advanced Prototyping",
+          progress: 0,
+          status: "Not Started",
+          enrolled: false,
+        },
+        {
+          name: "Accessibility Specialist",
+          progress: 0,
+          status: "Not Started",
+          enrolled: false,
+        },
+      ],
+    },
+    "Backend Developer": {
+      roadmapLink: "https://roadmap.sh/pdfs/roadmaps/backend.pdf",
+      certifications: [
+        {
+          name: "Backend Architecture Mastery",
+          progress: 18,
+          status: "In Progress",
+          enrolled: true,
+        },
+        {
+          name: "Database Design Expert",
+          progress: 0,
+          status: "Not Started",
+          enrolled: false,
+        },
+        {
+          name: "API Security Professional",
+          progress: 0,
+          status: "Not Started",
+          enrolled: false,
+        },
+      ],
+    },
+    "Blockchain Developer": {
+      roadmapLink: "https://roadmap.sh/pdfs/roadmaps/blockchain.pdf",
+      certifications: [
+        {
+          name: "Blockchain Fundamentals",
+          progress: 12,
+          status: "In Progress",
+          enrolled: true,
+        },
+        {
+          name: "Smart Contract Development",
+          progress: 0,
+          status: "Not Started",
+          enrolled: false,
+        },
+        {
+          name: "DeFi Architecture",
+          progress: 0,
+          status: "Not Started",
+          enrolled: false,
+        },
+      ],
+    },
+    "Cybersecurity Engineer": {
+      roadmapLink: "https://roadmap.sh/pdfs/roadmaps/cyber-security.pdf",
+      certifications: [
+        {
+          name: "CompTIA Security+",
+          progress: 22,
+          status: "In Progress",
+          enrolled: true,
+        },
+        {
+          name: "Certified Ethical Hacker",
+          progress: 0,
+          status: "Not Started",
+          enrolled: false,
+        },
+        {
+          name: "CISSP Preparation",
+          progress: 0,
+          status: "Not Started",
+          enrolled: false,
+        },
+      ],
+    },
+  };
+
+  const currentCertPath =
+    certificationData[user.role] || certificationData["Software Engineer"];
+
+  // Salary insights
+  const salaryInsight = {
+    current: employeeInfo.salary,
+    projection: "$95,000",
+    nextCertificate: currentCertPath.certifications[0].name,
+    increase: "+$20,000",
+    percentage: "26.7%",
+  };
+
+  // Performance tracking
+  const performance = {
+    initialProject: {
+      status: "In Progress",
+      tasksCompleted: 8,
+      totalTasks: 25,
+      retakes: 0,
+    },
+    testsPassed: 1,
+    testsRequired: 3,
+    score: 85,
+  };
+
+  // Scheduling
+  const scheduledMeetings = [
+    {
+      title: "Daily Standup",
+      time: "9:00 AM - 9:30 AM",
+      type: "Daily",
+      status: "on-time",
+    },
+    {
+      title: "1-on-1 with " + initialProject.mentor,
+      time: "2:00 PM - 3:00 PM",
+      type: "Weekly",
+      status: "on-time",
+    },
+    {
+      title: "Code Review Session",
+      time: "4:00 PM - 5:00 PM",
+      type: "As Needed",
+      status: "on-time",
+    },
+    {
+      title: "Team Retrospective",
+      time: "Friday 3:00 PM",
+      type: "Bi-weekly",
+      status: "on-time",
+    },
+  ];
+
+  const dailyTasks = [
+    { task: "Review pull requests", completed: true },
+    { task: "Complete feature implementation", completed: false },
+    { task: "Update project documentation", completed: false },
+    { task: "Team sync meeting", completed: true },
+  ];
+
+  const navigationItems = [
+    { icon: Home, label: "Overview", anchor: "#overview" },
+    { icon: BookOpen, label: "My Learning", anchor: "#learning" },
+    { icon: Calendar, label: "Schedule", anchor: "#schedule" },
+    { icon: Award, label: "Certifications", anchor: "#certifications" },
+    { icon: TrendingUp, label: "Performance", anchor: "#performance" },
+  ];
+
+  const scrollToSection = (anchor) => {
+    const element = document.querySelector(anchor);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-dark flex">
+      {/* Sidebar */}
+      <motion.aside
+        className={`fixed lg:sticky top-0 left-0 h-screen bg-dark-lighter border-r border-gray-800 z-50 transition-all duration-300 ${
+          sidebarOpen ? "w-64" : "w-20"
+        }`}
+        initial={{ x: -100 }}
+        animate={{ x: 0 }}
+      >
+        <div className="flex flex-col h-full p-4">
+          {/* Logo */}
+          <div className="flex items-center justify-between mb-8">
+            <Link to="/" className="flex items-center space-x-2">
+              <img
+                src="/Shadow Mentor Logo.png"
+                alt="Shadow Mentor Logo"
+                className="w-20 h-20 object-contain flex-shrink-0"
+              />
+              {sidebarOpen && (
+                <span className="text-lg font-bold whitespace-nowrap">
+                  ShadowMentor
+                </span>
+              )}
+            </Link>
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="lg:hidden text-gray-400 hover:text-white"
+            >
+              {sidebarOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
+          </div>
+
+          {/* Navigation */}
+          <nav className="flex-1 space-y-2">
+            {navigationItems.map((item, index) => (
+              <button
+                key={index}
+                onClick={() => scrollToSection(item.anchor)}
+                className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-dark transition text-gray-400 hover:text-white"
+              >
+                <item.icon className="w-5 h-5 flex-shrink-0" />
+                {sidebarOpen && <span>{item.label}</span>}
+              </button>
+            ))}
+          </nav>
+
+          {/* Logout */}
+          <button
+            onClick={handleLogout}
+            className="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-dark transition text-gray-400 hover:text-red-400 mt-auto"
+          >
+            <LogOut className="w-5 h-5 flex-shrink-0" />
+            {sidebarOpen && <span>Logout</span>}
+          </button>
+        </div>
+      </motion.aside>
+
+      {/* Main Content */}
+      <main className="flex-1 overflow-auto">
+        <div className="p-8">
+          {/* Header */}
+          <div id="overview" className="mb-8">
+            <h1 className="text-3xl font-bold mb-2">
+              Welcome,{" "}
+              <span className="gradient-text">{employeeInfo.name}</span>
+            </h1>
+            <p className="text-gray-400">
+              {employeeInfo.role} - {employeeInfo.level}
+            </p>
+          </div>
+
+          {/* Employee Info Card */}
+          <div
+            id="performance"
+            className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8"
+          >
+            <div className="glass-card p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center">
+                <Users className="w-5 h-5 mr-2 text-primary" />
+                Employee Information
+              </h3>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-400">ID:</span>
+                  <span className="text-white font-mono">
+                    {employeeInfo._id}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">Email:</span>
+                  <span className="text-white text-xs">
+                    {employeeInfo.email}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">Contract Type:</span>
+                  <span className="text-white">
+                    {employeeInfo.contract_type}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">Country:</span>
+                  <span className="text-white">
+                    {employeeInfo.country_of_birth}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">Gender:</span>
+                  <span className="text-white">{employeeInfo.gender}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">Hire Date:</span>
+                  <span className="text-white">{employeeInfo.hire_date}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">Service Days:</span>
+                  <span className="text-primary font-semibold">
+                    {employeeInfo.length_of_service_days} days
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">Level:</span>
+                  <span className="text-primary font-semibold">
+                    {employeeInfo.level}
+                  </span>
+                </div>
+                <div className="flex justify-between pt-2 border-t border-gray-700">
+                  <span className="text-gray-400">Salary:</span>
+                  <span className="text-white font-bold">
+                    {employeeInfo.salary}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="glass-card p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center">
+                <Target className="w-5 h-5 mr-2 text-primary" />
+                Initial Project
+              </h3>
+              <div className="space-y-3">
+                <div>
+                  <h4 className="text-white font-medium mb-1">
+                    {initialProject.title}
+                  </h4>
+                  <p className="text-sm text-gray-400">
+                    {initialProject.description}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500 mb-2">Required Skills:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {initialProject.skills.map((skill, i) => (
+                      <span
+                        key={i}
+                        className="px-2 py-1 bg-primary/20 text-primary text-xs rounded"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex justify-between text-sm pt-2 border-t border-gray-700">
+                  <span className="text-gray-400">Timeline:</span>
+                  <span className="text-white">{initialProject.timeline}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-400">Mentor:</span>
+                  <span className="text-white">{initialProject.mentor}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="glass-card p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center">
+                <BarChart3 className="w-5 h-5 mr-2 text-primary" />
+                Performance Score
+              </h3>
+              <div className="space-y-4">
+                <div className="text-center">
+                  <div className="text-5xl font-bold gradient-text mb-2">
+                    {performance.score}
+                  </div>
+                  <p className="text-sm text-gray-400">Overall Performance</p>
+                </div>
+                <div>
+                  <div className="flex justify-between text-sm mb-2">
+                    <span className="text-gray-400">Initial Project</span>
+                    <span className="text-white">
+                      {performance.initialProject.tasksCompleted}/
+                      {performance.initialProject.totalTasks}
+                    </span>
+                  </div>
+                  <div className="w-full bg-dark-lighter rounded-full h-2">
+                    <div
+                      className="bg-primary rounded-full h-2 transition-all"
+                      style={{
+                        width: `${
+                          (performance.initialProject.tasksCompleted /
+                            performance.initialProject.totalTasks) *
+                          100
+                        }%`,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between text-sm mb-2">
+                    <span className="text-gray-400">Tests Passed</span>
+                    <span className="text-white">
+                      {performance.testsPassed}/{performance.testsRequired}
+                    </span>
+                  </div>
+                  <div className="w-full bg-dark-lighter rounded-full h-2">
+                    <div
+                      className="bg-green-500 rounded-full h-2 transition-all"
+                      style={{
+                        width: `${
+                          (performance.testsPassed /
+                            performance.testsRequired) *
+                          100
+                        }%`,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+                <div className="pt-2 border-t border-gray-700">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Retakes Used:</span>
+                    <span className="text-white">
+                      {performance.initialProject.retakes}/3
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Certifications and Salary */}
+          <div
+            id="learning"
+            className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8"
+          >
+            <div id="certifications" className="glass-card p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center justify-between">
+                <span className="flex items-center">
+                  <Award className="w-5 h-5 mr-2 text-primary" />
+                  Certification Road Map
+                </span>
+                <a
+                  href={currentCertPath.roadmapLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs flex items-center space-x-1 text-primary hover:text-orange-400 transition"
+                >
+                  <span>View PDF</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </h3>
+              <div className="space-y-4">
+                {currentCertPath.certifications.map((cert, i) => (
+                  <div
+                    key={i}
+                    className="border border-gray-700 rounded-lg p-4"
+                  >
+                    <div className="flex items-start justify-between mb-2">
+                      <div>
+                        <h4 className="text-white font-medium text-sm">
+                          {cert.name}
+                        </h4>
+                        <p className="text-xs text-gray-400 mt-1 flex items-center space-x-2">
+                          <span>{cert.status}</span>
+                          {cert.enrolled && (
+                            <span className="px-2 py-0.5 bg-green-500/20 text-green-400 rounded text-xs">
+                              Enrolled
+                            </span>
+                          )}
+                        </p>
+                      </div>
+                      <FileText className="w-4 h-4 text-gray-400" />
+                    </div>
+                    <div className="w-full bg-dark-lighter rounded-full h-2 mb-2">
+                      <div
+                        className="bg-primary rounded-full h-2 transition-all"
+                        style={{ width: `${cert.progress}%` }}
+                      ></div>
+                    </div>
+                    <p className="text-xs text-gray-500">
+                      {cert.progress}% Complete
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="glass-card p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center">
+                <TrendingUp className="w-5 h-5 mr-2 text-primary" />
+                Salary Insight
+              </h3>
+              <div className="space-y-4">
+                <div className="bg-dark-lighter rounded-lg p-4">
+                  <p className="text-sm text-gray-400 mb-1">Current Salary</p>
+                  <p className="text-2xl font-bold text-white">
+                    {salaryInsight.current}
+                  </p>
+                </div>
+                <div className="bg-gradient-to-r from-primary/20 to-orange-600/20 border border-primary/30 rounded-lg p-4">
+                  <p className="text-sm text-gray-300 mb-1">
+                    Projected After Certification
+                  </p>
+                  <p className="text-2xl font-bold text-primary">
+                    {salaryInsight.projection}
+                  </p>
+                  <p className="text-sm text-gray-400 mt-2">
+                    Complete{" "}
+                    <span className="text-white font-medium">
+                      {salaryInsight.nextCertificate}
+                    </span>{" "}
+                    to unlock
+                  </p>
+                  <div className="flex items-center justify-between mt-3 pt-3 border-t border-primary/20">
+                    <span className="text-sm text-gray-400">
+                      Potential Increase:
+                    </span>
+                    <span className="text-green-400 font-semibold">
+                      {salaryInsight.increase} ({salaryInsight.percentage})
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Schedule and Daily Tasks */}
+          <div id="schedule" className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="glass-card p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold flex items-center">
+                  <Calendar className="w-5 h-5 mr-2 text-primary" />
+                  Smart Calendar
+                </h3>
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs text-gray-400">
+                    {activeScheduling ? "Active" : "Manual"}
+                  </span>
+                  <button
+                    onClick={() => setActiveScheduling(!activeScheduling)}
+                    className={`relative w-12 h-6 rounded-full transition ${
+                      activeScheduling ? "bg-primary" : "bg-gray-600"
+                    }`}
+                  >
+                    <div
+                      className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                        activeScheduling ? "translate-x-6" : ""
+                      }`}
+                    ></div>
+                  </button>
+                </div>
+              </div>
+              <div className="space-y-3">
+                {scheduledMeetings.map((meeting, i) => (
+                  <div
+                    key={i}
+                    className="flex items-start justify-between p-3 bg-dark-lighter rounded-lg"
+                  >
+                    <div className="flex items-start space-x-3">
+                      <Clock className="w-4 h-4 text-primary mt-1" />
+                      <div>
+                        <p className="text-white font-medium text-sm">
+                          {meeting.title}
+                        </p>
+                        <p className="text-xs text-gray-400 mt-1">
+                          {meeting.time}
+                        </p>
+                      </div>
+                    </div>
+                    <span className="text-xs px-2 py-1 bg-primary/20 text-primary rounded">
+                      {meeting.type}
+                    </span>
+                  </div>
+                ))}
+                <div className="pt-3 border-t border-gray-700">
+                  <div className="flex items-center justify-between text-sm">
+                    <div className="flex items-center text-green-400">
+                      <CheckCircle className="w-4 h-4 mr-2" />
+                      <span>On track - No delays detected</span>
+                    </div>
+                    <Zap className="w-4 h-4 text-primary" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="glass-card p-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center">
+                <CheckCircle className="w-5 h-5 mr-2 text-primary" />
+                Daily Tasks
+              </h3>
+              <div className="space-y-3">
+                {dailyTasks.map((item, i) => (
+                  <div
+                    key={i}
+                    className={`flex items-center justify-between p-3 rounded-lg ${
+                      item.completed
+                        ? "bg-green-500/10 border border-green-500/30"
+                        : "bg-dark-lighter border border-gray-700"
+                    }`}
+                  >
+                    <div className="flex items-center space-x-3">
+                      {item.completed ? (
+                        <CheckCircle className="w-5 h-5 text-green-400" />
+                      ) : (
+                        <div className="w-5 h-5 border-2 border-gray-600 rounded-full"></div>
+                      )}
+                      <span
+                        className={`text-sm ${
+                          item.completed
+                            ? "text-gray-400 line-through"
+                            : "text-white"
+                        }`}
+                      >
+                        {item.task}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+                <div className="pt-3 border-t border-gray-700">
+                  <div className="flex items-center justify-between text-sm text-gray-400">
+                    <span>
+                      Completed: {dailyTasks.filter((t) => t.completed).length}/
+                      {dailyTasks.length}
+                    </span>
+                    <Activity className="w-4 h-4 text-primary" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default EmployeeDashboard;

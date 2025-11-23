@@ -137,8 +137,8 @@ const LandingPage = () => {
               <a href="#benefits" className="hover:text-primary transition">
                 Benefits
               </a>
-              <Link to="/dashboard" className="btn-primary">
-                Launch Dashboard
+              <Link to="/login" className="btn-primary">
+                Login
               </Link>
             </div>
           </div>
@@ -192,7 +192,7 @@ const LandingPage = () => {
               variants={fadeInUp}
             >
               <Link
-                to="/dashboard"
+                to="/login"
                 className="btn-primary text-lg px-8 py-4 inline-flex items-center justify-center"
               >
                 Get Started <ArrowRight className="ml-2 w-5 h-5" />
