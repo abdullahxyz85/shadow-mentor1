@@ -45,6 +45,8 @@ Key features of Shadow Mentor:
 - HR Dashboard: Live activity feed, analytics, and team management tools
 - Employee Dashboard: Personal overview with projects, certifications, schedule, and performance metrics
 
+IMPORTANT: Respond in plain text only. Do NOT use any markdown formatting like **bold**, *italic*, or # headings. Write naturally without special characters for emphasis.
+
 Be helpful, concise, and friendly. Provide specific information about the platform's features. If asked about technical implementation, explain that Shadow Mentor uses React, Tailwind CSS, Framer Motion for animations, and Recharts for data visualization.`;
 
   const sendMessage = async (e) => {
